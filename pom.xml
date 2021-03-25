@@ -37,8 +37,8 @@
 		</dependency>
 		
 	    <dependency>
-	    	<groupId>external</groupId>
-		    <artifactId>external</artifactId>
+	    	<groupId>NiceID</groupId>
+		    <artifactId>NiceID</artifactId>
 		    <version>1.0</version>
 		    <scope>system</scope>
 		    <systemPath>${webapp.lib}/NiceID.jar</systemPath>
@@ -51,6 +51,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
