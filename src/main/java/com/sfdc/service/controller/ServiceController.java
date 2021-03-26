@@ -94,6 +94,7 @@ public class ServiceController {
 
 	    String sSiteCode = siteCode;				// NICE로부터 부여받은 사이트 코드
 	    String sSitePassword = sitePassword;			// NICE로부터 부여받은 사이트 패스워드
+	    System.out.println("Origin Encode Data: " + encodeData);
 	    String sEncodeData = ServiceUtil.requestReplace(encodeData, "encodeData");
 	    System.out.println("Replace Encode Data: " + sEncodeData);
 
