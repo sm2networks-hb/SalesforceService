@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sfdc.service.helper.ServiceUtil;
 
 @RestController
@@ -113,7 +115,14 @@ public class ServiceController {
 	        // 데이타를 추출합니다.
 	        java.util.HashMap mapResult = niceCheck.fnParse(sPlainData);
 	        mapResult.put("CIPHER_TIME", sCipherTime);
-	        sResult = mapResult.toString();
+	        
+	        ObjectMapper mapper = new ObjectMapper();
+	        try {
+				sResult = mapper.writeValueAsString(mapResult);
+			} catch (JsonProcessingException e) {
+				iReturn = -99;
+				sResult = e.getMessage();
+			}
 	    }
 	    else if( iReturn == -1)
 	    {
