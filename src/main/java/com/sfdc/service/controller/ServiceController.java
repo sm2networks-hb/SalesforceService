@@ -14,7 +14,7 @@ public class ServiceController {
 								, @RequestParam String gender, @RequestParam String domain, @RequestParam String successURL
 								, @RequestParam String errorURL) {
 		
-		System.out.println("111");
+		System.out.println("popupInfo Start");
 	    NiceID.Check.CPClient niceCheck = new  NiceID.Check.CPClient();
 	    
 	    String sSiteCode = siteCode;			// NICE로부터 부여받은 사이트 코드
@@ -27,7 +27,7 @@ public class ServiceController {
 	    } else {
 	    	sRequestNumber = reqNumber;
 	    }
-	    System.out.println("222: " + sRequestNumber);
+	    System.out.println("Request No: " + sRequestNumber);
 	  	//session.setAttribute("REQ_SEQ" , sRequestNumber);	// 해킹등의 방지를 위하여 세션을 쓴다면, 세션에 요청번호를 넣는다.
 	  	
 	   	String sAuthType = authType;      	// 없으면 기본 선택화면, M: 핸드폰, C: 신용카드, X: 공인인증서
@@ -54,9 +54,9 @@ public class ServiceController {
 	    
 	    String sResult = "";
 	    
-	    System.out.println("333: " + sPlainData);
+	    System.out.println("Request Data: " + sPlainData);
 	    int iReturn = niceCheck.fnEncode(sSiteCode, sSitePassword, sPlainData);
-	    System.out.println("444: " + iReturn);
+	    System.out.println("Result Code: " + iReturn);
 	    if( iReturn == 0 )
 	    {
 	    	sResult = niceCheck.getCipherData();
@@ -81,23 +81,28 @@ public class ServiceController {
 	    {
 	    	sResult = "알수 없는 에러 입니다. iReturn : " + iReturn;
 	    }
+	    
+	    System.out.println("Result Message: " + sResult);
 
 	    return iReturn + ":" + sResult;
 	}
 
 	@GetMapping("/decodeData")
 	public String getDecodeData(@RequestParam String siteCode, @RequestParam String sitePassword, @RequestParam String encodeData) {
+		System.out.println("decode Start");
 	    NiceID.Check.CPClient niceCheck = new  NiceID.Check.CPClient();
 
 	    String sSiteCode = siteCode;				// NICE로부터 부여받은 사이트 코드
 	    String sSitePassword = sitePassword;			// NICE로부터 부여받은 사이트 패스워드
 	    String sEncodeData = ServiceUtil.requestReplace(encodeData, "encodeData");
+	    System.out.println("Replace Encode Data: " + sEncodeData);
 
 	    String sCipherTime = "";			// 복호화한 시간
 	    String sPlainData = "";
 	    
 	    String sResult = "";
 	    int iReturn = niceCheck.fnDecode(sSiteCode, sSitePassword, sEncodeData);
+	    System.out.println("Result Code: " + iReturn);
 
 	    if( iReturn == 0 )
 	    {
@@ -137,6 +142,8 @@ public class ServiceController {
 	    {
 	    	sResult = "알수 없는 에러 입니다. iReturn : " + iReturn;
 	    }
+	    
+	    System.out.println("Result Message: " + sResult);
 	    
 	    return iReturn + ":" + sResult;
 	}
